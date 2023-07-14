@@ -25,7 +25,7 @@ try {
     if(!url[0]){
     const result = await yt.search(match);
     if(!result) return await m.send('_not found_');
-    let msg ="*_YT SONG DOWNLOADER_*\n\n", n =1;
+    let msg ="YT SONG DOWNLOADER", n =1;
     await result.map(r=>arr.push(r.title));
     return await m.send(GenListMessage(msg, arr));
    } else {
@@ -47,7 +47,7 @@ try {
     if(!url[0]){
     const result = await yt.search(match);
     if(!result) return await m.send('_not found_');
-    let msg ="*_YT VIDEO DOWNLOADER_*\n\n", arr=[];
+    let msg ="YT VIDEO DOWNLOADER", arr=[];
     await result.map(r=>arr.push(r.title));
     return await m.send(GenListMessage(msg, arr));
    } else {
@@ -76,5 +76,6 @@ const result = await yt.search(match);
 return await ytmp3(m,result[0].url);
 }
 } catch(e){
+console.log(e);
 return await m.send('_Error, try again!_')
 }});
