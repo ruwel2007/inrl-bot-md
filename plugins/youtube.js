@@ -25,7 +25,7 @@ try {
     if(!url[0]){
     const result = await yt.search(match);
     if(!result) return await m.send('_not found_');
-    let msg ="YT SONG DOWNLOADER", n =1;
+    let msg ="YT SONG DOWNLOADER",arr=[];
     await result.map(r=>arr.push(r.title));
     return await m.send(GenListMessage(msg, arr));
    } else {
