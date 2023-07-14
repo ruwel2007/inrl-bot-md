@@ -5,7 +5,10 @@ const fs = require('fs');
 const {
     inrl,
     sleep,
-    extractUrlsFromString
+    extractUrlsFromString,
+    GenListMessage,
+    ytmp3,
+    ytmp4
 } = require('../lib/');
 const {
     BASE_URL
@@ -23,18 +26,10 @@ try {
     const result = await yt.search(match);
     if(!result) return await m.send('_not found_');
     let msg ="*_YT SONG DOWNLOADER_*\n\n", n =1;
-    await result.map(r=>msg += `*${n++}*. `+'```'+`${r.title}`+'```\n');
-    return await m.send(msg);
+    await result.map(r=>arr.push(r.title));
+    return await m.send(GenListMessage(msg, arr));
    } else {
-   m.client.text = url[0]
-    const media = await yt.stream(url[0],{
-        quality: 'medium',
-        type: 'audio',
-        highWaterMark: 1048576 * 32
-    });
-    file = await media.stream.pipe(fs.createWriteStream('./type.mp3'));
-    await sleep(100);
-    return await m.conn.sendMessage(m.from, {audio:fs.readFileSync('./type.mp3'),mimetype: 'audio/mpeg'});
+    return await ytmp3(m,url[0]);
    }
    } catch(e){
    return m.send('_Time Out_ '+e);
@@ -52,19 +47,11 @@ try {
     if(!url[0]){
     const result = await yt.search(match);
     if(!result) return await m.send('_not found_');
-    let msg ="*_YT VIDEO DOWNLOADER_*\n\n", n =1;
-    await result.map(r=>msg += `*${n++}*. `+'```'+`${r.title}`+'```\n');
-    return await m.send(msg);
+    let msg ="*_YT VIDEO DOWNLOADER_*\n\n", arr=[];
+    await result.map(r=>arr.push(r.title));
+    return await m.send(GenListMessage(msg, arr));
    } else {
-    m.client.text = url[0]
-    const media = await yt.stream(url[0],{
-        quality: 'medium',
-        type: 'video',
-        highWaterMark: 1048576 * 32
-    });
-    file = await media.stream.pipe(fs.createWriteStream('./type.mp4'));
-    await sleep(100);
-    return await m.conn.sendMessage(m.from, {video:fs.readFileSync('./type.mp4'),mimetype: 'video/mp4'});
+   return await ytmp4(m,url[0]);
    }
    } catch(e){
    return m.send('_Time Out_'+e);
@@ -81,26 +68,12 @@ if(m.client.body.includes("YT VIDEO DOWNLOADER")){
 match = m.client.body.replace("YT VIDEO DOWNLOADER","").trim();
 await m.send(`*_downloading_*\n*_${match}_*`);
 const result = await yt.search(match);
-const media = await yt.stream(result[0].url, {
-        quality: 'medium',
-        type: 'video',
-        highWaterMark: 1048576 * 32
-    });
-    file = await media.stream.pipe(fs.createWriteStream('./type.mp4'));
-    await sleep(100);
-    return await m.conn.sendMessage(m.from, {video:fs.readFileSync('./type.mp4'),mimetype: 'video/mp4'});
+return await ytmp4(m,result[0].url);
 } else if(m.client.body.includes("YT SONG DOWNLOADER")){
 match = m.client.body.replace("YT SONG DOWNLOADER","").trim();
 await m.send(`*_downloading_*\n${match}`);
 const result = await yt.search(match);
-const media = await yt.stream(result[0].url, {
-        quality: 'medium',
-        type: 'audio',
-        highWaterMark: 1048576 * 32
-    });
-    file = await media.stream.pipe(fs.createWriteStream('./type.mp3'));
-    await sleep(100);
-    return await m.conn.sendMessage(m.from, {audio:fs.readFileSync('./type.mp3'),mimetype: 'audio/mpeg'});
+return await ytmp3(m,result[0].url);
 }
 } catch(e){
 return await m.send('_Error, try again!_')
