@@ -4,6 +4,7 @@ const git = simpleGit();
 const Config = require('../config');
 const exec = require('child_process').exec;
 const Heroku = require('heroku-client');
+const axios = require("axios");
 const {
     PassThrough
 } = require('stream');
