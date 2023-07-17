@@ -23,7 +23,7 @@ try {
             image: {url : thumb},
             caption :msg
         }, {
-            quoted: message
+            quoted: m
         })
     } catch (e) {
    return await m.send("*_Failed_*");
