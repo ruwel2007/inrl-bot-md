@@ -44,7 +44,7 @@ inrl({
                     text: "*_already up-to-date_*"
                 });
             } else {
-                await m.send("_*updating...*_\n```");
+                await m.send("_*updating...*_");
                 let al
                 try {
                     await heroku.get('/apps/' + process.env.HEROKU_APP_NAME)
