@@ -9,6 +9,7 @@ const got = require('got');
 	const urls = extractUrlsFromString(message.client.body);
 	if(!urls[0]) return;
 	urls.map(async(url)=>{
+		/*
         if(url.match(/^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/)){
 	let {body} =  await got(BASE_URL + 'api/ytv?url=' + url);
 	const {result} = JSON.parse(body);
@@ -18,7 +19,7 @@ const got = require('got');
 	} else {
 	await client.sendMessage(message.from, {video:{url:result.url},caption:result.title}).catch((e)=>message.reply('*_request Filed With StatusCode 403_*'));
 	}
-	}
+	}*/
 	if(url.match(/https?:\/\/(?:www\.)?instagram\.com(?:\/[^\/]+)?\/(?:p|reel)\/([^\/?#&]+)/)){
 	let {body} =  await got(BASE_URL + 'api/insta?url=' + url);
 	const {result} = JSON.parse(body);
