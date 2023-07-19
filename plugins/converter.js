@@ -56,7 +56,7 @@ inrl({
     return await sendVoice(message, client)
 });
 inrl({
-    pattern: 'togif',
+    pattern: 'gif',
     desc: "to convert webp to gif",
     sucReact: "⚒️",
     category: ["all"],
@@ -176,7 +176,6 @@ inrl({
     if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
     return await sendSquirrelAudio(message, client);
 });
-inrl({
 
 inrl({
     pattern: 'mp3',
