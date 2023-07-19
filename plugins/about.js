@@ -24,18 +24,7 @@ inrl({
     let b=1,c="";commands.map((e=>{e.pattern&&e.desc?c+=`${b++} *${e.pattern.replace(/[^a-zA-Z0-9,-]/g,"")}*\n_${e.desc}_\n\n`:c+=`${b++} *${e.pattern.replace(/[^a-zA-Z0-9,-]/g,"")}*\n`}));
     return await message.send(c);
 });
-inrl({
-    pattern: 'ping ?(.*)',
-    desc: 'To check ping',
-    sucReact: "💯",
-    category: ["system", "all"],
-    type: 'info'
-}, async (message, client) => {
-    const start = new Date().getTime()
-    await message.reply('Ping!')
-    const end = new Date().getTime()
-    return await message.reply('Pong! ' + (end - start) + ' ms');
-});
+
 inrl({
     pattern: 'del',
     desc: "to delete unwanted grp msg sended by bot",
