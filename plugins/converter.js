@@ -18,7 +18,6 @@ const {
     sendMp4AsMp3,
     getVar
 } = require('../lib');
-const translatte = require("translatte");
 
 const {
     BASE_URL
@@ -178,39 +177,7 @@ inrl({
     return await sendSquirrelAudio(message, client);
 });
 inrl({
-    pattern: 'tts',
-    desc: "to get text as audio ",
-    sucReact: "💔",
-    category: ['all'],
-    type: "converter"
-}, (async (message, client, match) => {
-    try {
-        if (message.quoted) {
-            match = match || message.quoted.text;
-        }
-        if (!match) return await client.sendMessage(message.from, {
-            text: 'Enter A text'
-        }, {
-            quoted: message
-        });
-        let slang = match.match('\\{([a-z]+)\\}');
-        let lang = "en";
-        if (slang) {
-            lang = slang[1];
-            match = match.replace(slang[0], '');
-        }
-        let mm = `${BASE_URL}api/tts?text=${encodeURIComponent(match)}&lang=${lang}`;
-        return await client.sendMessage(message.from, {
-            audio: {
-                url: mm
-            },
-            mimetype: "audio/mpeg",
-            ptt: false
-        });
-    } catch (e) {
-        message.reply(JSON.stringify(e))
-    }
-}));
+
 inrl({
     pattern: 'mp3',
     desc: "to get video as audio ",
@@ -222,27 +189,3 @@ inrl({
     if (!message.quoted.audioMessage && !message.quoted.videoMessage) return message.reply('reply to an video/mp4');
     return await sendMp4AsMp3(message, client)
 }));
-inrl({
-    pattern: 'trt',
-    desc: "to get video as audio ",
-    sucReact: "💥",
-    category: ['all'],
-    type: "converter"
-}, async (message, client, match) => {
-    let data = await getVar();
-    let {
-        LANG
-    } = data.data[0];
-    if (!match) return message.send('need text Example: trt heloow, en');
-    try {
-        if (match.includes(',')) {
-            let rslt = await translatte(match.split(',')[0], {
-                from: "auto",
-                to: match.split(',')[1].trim() || LANG
-            });
-            return await message.send(rslt.text)
-        }
-    } catch (e) {
-        message.reply(JSON.stringify(e))
-    }
-});
