@@ -1,4 +1,4 @@
-//created bg @inrl
+//created by @inrl
 const {
     inrl,
     GenListMessage,
@@ -10,7 +10,7 @@ inrl({
     DismissPrefix: true,
     type: "system"
 }, async (m) => {
-    if (m.client.text) return;
+    if (m.client.text && m.client.text.length > 3) return;
     return await m.sock.sendMessage(m.from, {
         text: GenListMessage("Settings Updater", ["ANTI_SPAM", "ALLWAYS_ONLINE", "REACT", "AUTO_BIO", "READ_CHAT", "BGMBOT", "WORKTYPE", "PM_BLOCK", "CALL_BLOCK", "STATUS_VIEW", "AUTO_CHAT_PM", "AUTO_CHAT_GRP", "BOT_PRESENCE"])
     })
@@ -153,32 +153,32 @@ inrl({
     match = m.client.body.toLowerCase();
     if (match.includes('allways_online')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("ALLWAYS_ONLINE", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('anti_spam')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("ANTI_SPAM", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('react')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("REACT", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('auto_bio')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("AUTO_BIO", updt);
         return await m.reply("_*requested to the db*_\n```try restart to activate```");
     } else if (match.includes('read_chat')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("READ_CHAT", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('bgmbot')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("BGMBOT", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('worktype')) {
@@ -188,27 +188,27 @@ inrl({
         return await m.reply("_*requested to the db*_\n```restart to run with new variable```");
     } else if (match.includes('pm_block')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("PM_BLOCK", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('call_block')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("CALL_BLOCK", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('status_view')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("STATUS_VIEW", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('auto_chat_pm')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("AUTO_CHAT_PM", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('auto_chat_grp')) {
         let updt = match.split(" ").pop();
-        updt = updt == "off" ? 'false' : 'true';
+        updt = updt == "true" ? 'false' : 'true';
         await UpdateVariable("AUTO_CHAT_GRP", updt);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('available') || match.includes('composing') || match.includes('recording') || match.includes('paused')) {
