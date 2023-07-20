@@ -1,14 +1,10 @@
 {
   "name": "inrl-bot-md",
-  "version": "3.1.1",
+  "version": "3.1.5",
   "description": "WhatsApp bot made with nodejs and baileys",
   "main": "index.js",
     "scripts": {
     "start": "pm2 start . --attach --name inrl"
-  },
-  "engines" : { 
-    "npm" : ">=9.6.7",
-    "node" : ">=20.0.0"
   },
   "repository": {
     "type": "git",
@@ -16,7 +12,6 @@
   },
   "dependencies": {
     "@whiskeysockets/baileys": "git+https://github.com/Afx-Abu/baileys.ml",
-    "@adiwajshing/baileys": "^5.0.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@vitalets/google-translate-api": "^9.2.0",
     "@adiwajshing/keyed-db": "^0.2.4",
