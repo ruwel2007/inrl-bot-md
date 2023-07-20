@@ -1,4 +1,3 @@
-const { delay } = require("@adiwajshing/baileys");
 const {inrl,getVar} = require("../lib/");
 const fs = require("fs");
 const path = require("path");
