@@ -11,7 +11,6 @@ inrl({
 }, async (m, conn, match) => {
     if (!match) return await m.send('_give me a number *Ex :917025099xx*_');
     if (!match.match('x')) return await m.send('_give me a number in valid Format! *Ex :917025099xx*_');
-    if(match.replace(/[^0-9]/gi, '').length <7) return await m.send('*_give me a numberin valid format_*\n*ex*:-```91098765432x```');
     let xlength = match.replace(/[0-9]/gi, '')
     if (xlength.length > 3) return await m.send("_you can use maximum x length upto3_")
     let count = xlength.length == 3 ? 1000 : xlength.length == 2 ? 100 : 10;
