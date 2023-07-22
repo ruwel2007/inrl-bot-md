@@ -54,7 +54,7 @@ inrl({
         })
     }
     await sleep(50)
-    return await m.editMessage(m.jid,bcs, key)
+    return await m.editMessage(m.jid,msg, key)
 });
 
 
