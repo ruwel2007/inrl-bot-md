@@ -3,7 +3,7 @@ const {
 } = require('../lib/'), {
         BASE_URL
     } = require('../config'),
-    got = require('got');
+    axios = require('axios');
 inrl({
     pattern: "$gpt",
     sucReact: "🤝",
@@ -16,9 +16,9 @@ inrl({
         }
         if (!match) return await message.reply('need text to get ai result');
         let {
-            body
-        } = await got(`${BASE_URL}api/chatgpt?text=${match}`);
-        body = JSON.parse(body).result;
+            data
+        } = await axios(`${BASE_URL}api/chatgpt?text=${match}`);
+        body = data.result;
         return await client.sendMessage(message.from, {
             text: body
         });
@@ -48,7 +48,7 @@ inrl({
     category: ["system", "all"],
     type: "general"
 }, async (message, client) => {
-    if (message.quoted) {
+    if (message.quoted.sender) {
         await client.sendMessage(message.from, {
             text: message.quoted.sender
         }, {
@@ -187,6 +187,6 @@ inrl({
             });
         }
     } catch (e) {
-        message.reply('_field_');
+        message.reply('_*Failed*_');
     }
 });
