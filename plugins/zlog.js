@@ -23,7 +23,6 @@ const Config = require("../config")
 const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
-const got = require('got');
 const cheerio = require('cheerio');
 
 inrl({
@@ -38,7 +37,7 @@ inrl({
                 type : "owner",
                 usage: "give evaled data for your script"
 	   },
-	async (message, client, Texts, cmd, chatUpdate, data) => {
+	async (message, client, Texts, cmd, data, chatUpdate) => {
     let m = message, sock = c = conn = client;
     if(!message.client.body.trim().startsWith('>')) return;
     let match = message.client.body.replace('>','').trim();let text = match;
