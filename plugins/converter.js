@@ -39,6 +39,7 @@ inrl({
     type: "converter"
 }, async (message, client) => {
     if (!message.quoted.stickerMessage && !message.reply_message.text && !message.client.text) return message.reply('_*reply to a sticker*_');
+    if(!message.quoted.stickerMessage) return;
     return await sendVideo(message, client)
 });
 inrl({
