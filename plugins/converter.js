@@ -16,7 +16,6 @@ const {
     sendReverseAudio,
     sendSquirrelAudio,
     sendMp4AsMp3,
-    getVar
 } = require('../lib');
 
 const {
@@ -29,8 +28,7 @@ inrl({
     category: ["all"],
     type: "converter"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.stickerMessage) return message.reply('reply to  a sticker');
+    if (!message.quoted.stickerMessage) return message.reply('reply to a sticker');
     return await sendPhoto(message, client);
 });
 inrl({
@@ -40,8 +38,7 @@ inrl({
     category: ["all"],
     type: "converter"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.stickerMessage) return message.reply('reply to  a sticker');
+    if (!message.quoted.stickerMessage && !message.reply_message.text && !message.client.text) return message.reply('_*reply to a sticker*_');
     return await sendVideo(message, client)
 });
 inrl({
@@ -51,8 +48,7 @@ inrl({
     category: ["all"],
     type: "converter"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendVoice(message, client)
 });
 inrl({
@@ -73,8 +69,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendBassAudio(message, client)
 });
 inrl({
@@ -84,8 +79,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendSlowAudio(message, client)
 });
 inrl({
@@ -95,8 +89,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendBlownAudio(message, client)
 });
 inrl({
@@ -106,8 +99,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendDeepAudio(message, client);
 });
 inrl({
@@ -117,8 +109,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendErrapeAudio(message, client)
 });
 inrl({
@@ -128,8 +119,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendFastAudio(message, client)
 });
 inrl({
@@ -139,8 +129,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendFatAudio(message, client);
 });
 inrl({
@@ -150,8 +139,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendNightcoreAudio(message, client);
 });
 inrl({
@@ -161,8 +149,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendReverseAudio(message, client);
 });
 inrl({
@@ -172,8 +159,7 @@ inrl({
     category: ["all"],
     type: "audio-edit"
 }, async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage) return message.reply('reply to an audio/voice');
+    if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
     return await sendSquirrelAudio(message, client);
 });
 
@@ -184,7 +170,6 @@ inrl({
     category: ['all'],
     type: "converter"
 }, (async (message, client) => {
-    if (!message.quoted) return;
-    if (!message.quoted.audioMessage && !message.quoted.videoMessage) return message.reply('reply to an video/mp4');
+    if (!message.quoted.audioMessage && !message.quoted.videoMessage) return message.reply('_*reply to an video/mp4*_');
     return await sendMp4AsMp3(message, client)
 }));
