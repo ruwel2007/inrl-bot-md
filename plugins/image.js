@@ -5,7 +5,7 @@ const {
     getVar
 } = require('../lib/');
 const { BASE_URL } = require('../config');
-const got = require('got');
+const axios = require('axios');
 const fs = require('fs');
 
 inrl({
@@ -15,19 +15,13 @@ inrl({
     category: ["system", "all", "create", "photo", "fun"],
     type: "converter",
     usage: "give png image without background for your img request"
-}, async (message, client) => {
-    let data = await getVar();
-    let {
-        CAPTION
-    } = data.data[0]
-    if (!message.quoted) return message.reply('reply to a img msg!')
-    if (!message.quoted.imageMessage) return message.reply('reply to a img msg!')
+}, async (message, client, match) => {
+    if (!message.reply_message.image) return message.reply('*_reply to a img msg!_*')
     let img = await client.downloadAndSaveMediaMessage(message.quoted.imageMessage)
     let rmbgimg = await remove(fs.readFileSync(img))
     // let rmbg = await fs.writeFile('./media/rmbg/isexit.jpg', rmbgimg)
-    await client.sendMessage(message.from, {
+    await client.sendMessage(message.chat, {
         image: rmbgimg,
-        caption: CAPTION
     }, {
         quoted: message
     })
@@ -40,19 +34,19 @@ inrl({
     category: ["search", "all"],
     type: "search"
 }, async (message, client, match) => {
-    let data = await getVar();
-    let {
-        CAPTION
-    } = data.data[0]
     if (!match) {
         return await client.sendMessage(message.from, {
-            text: 'Enter Text'
+            text: '*_Give Me A Text To Search_*'
         }, {
             quoted: message
         });
     }
-    const {body} = await got(BASE_URL+'api/gis?text='+match);
-    const {result} = JSON.parse(body);
-    if(!result[0]) return await message.send('_not FOUND_');
-    return await message.sendReply(result[0],{caption:'result for'+match},'image');
+    let count = 1
+    if(match.includes(";")) match = match.split(';')[0];count=match.split(';')[1];
+    if(!count.replace(/[^0-9]/g,'')) {count=1}else{count = count.replace(/[^0-9]/g,'')};
+    if(!count>3 && !message.client.isCreator) return await message.reply("*_Only Owner can use more then 3 image Search At at a Tiem_*");
+    const {data} = await axios(BASE_URL+'api/gis?text='+match+`&count=${count}`);
+    const {result} = data;
+    if(!result[0]) return await message.send('_Not Found_');
+    return await message.sendReply(result[0],{caption:'*result for*: ```'+match+"```"},'image');
 });
