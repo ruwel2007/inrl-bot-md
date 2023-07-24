@@ -35,7 +35,7 @@ inrl({
     try {
         if (!message.client.text) return message.send("need a text to serch");
         let result = await ringtone(message.client.text), res=[];
-        await result.map(r=>res.push(result.title));
+        await result.map(r=>res.push(r.title));
         return await client.sendMessage(message.jid, {
             text: GenListMessage("AVAILABLE RINGTONES", res)
             });
