@@ -10,41 +10,41 @@ inrl({
     desc: 'To set media as a cmd',
     sucReact: "😛",
     category: ["system", "all"],
-    type: "action"
+    type: "action",
+    fromMe :true
 }, async (message, client, match, cmd) => {
-    if (!message.client.isCreator) return message.reply('only for owner!')
-    if (!message.quoted) return message.send("replay to a media")
-    if (!message.quoted.msg.fileSha256) return message.send("you replayed not for a media")
-    if (!match) return await message.send("for which cmd!")
+    if (!message.reply_message.sticker) return await message.reply('*_reply to a sticker msg and give me cmd name\nex: setcmd ping_*");
+    if (!message.reply_message.msg.fileSha256) return message.send("_*Failed To Save Your Media Message!*_")
+    if (!match) return await message.send("*_For Which Cmd!_*")
     await setCmd(message.quoted.msg.fileSha256.join(""), match)
-    return await message.reply("successfull")
+    return await message.reply("_successfull_")
 });
 inrl({
     pattern: 'dltcmd',
     desc: 'To dlt media d as alrdy set',
     sucReact: "💥",
     category: ["system", "all"],
-    type: "action"
+    type: "action",
+    fromMe :true
 }, async (message, client, match, cmd) => {
-    if (!message.client.isCreator) return message.reply('only for owner!')
-    if (!match) return await message.send("which cmd!")
+    if (!match) return await message.send("_*which cmd!*_")
     await DeleteCmd(match)
-    return await message.reply("successfull")
+    return await message.reply("_successfull_")
 });
 inrl({
     pattern: 'getcmd',
     desc: 'To dlt media d as alrdy set',
     sucReact: "💥",
     category: ["system", "all"],
-    type: "action"
+    type: "action",
+    fromMe :true
 }, async (message, client, match, cmd) => {
-    if (!message.client.isCreator) return message.reply('only for owner!')
     let data = await getCmd(),
-        cmds = "";
+        cmds = "*Totel Cmds*";
     if (data == "no data") return message.send('no sticker cmd in your db!')
     let n = 1;
     data.map((b) => {
-        cmds += `${n++}  ${b.cmd}\n`;
+        cmds += '```'+`${n++}  ${b.cmd}`+'```'+`\n`;
     })
     return await message.reply(cmds)
 });
