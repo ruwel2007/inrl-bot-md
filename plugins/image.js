@@ -48,5 +48,7 @@ inrl({
     const {data} = await axios(BASE_URL+'api/gis?text='+match+`&count=${count}`);
     const {result} = data;
     if(!result[0]) return await message.send('_Not Found_');
-    return await message.sendReply(result[0],{caption:'*result for*: ```'+match+"```"},'image');
+    result.map(async(url)=>{
+    return await message.sendReply(url,{caption:'*result for*: ```'+match+"```"},'image');
+    });
 });
