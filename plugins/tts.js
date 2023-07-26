@@ -3,19 +3,12 @@ const {inrl, TTS} = require('../lib');
 inrl({
     pattern: 'tts',
     desc: "to get text as audio ",
-    sucReact: "💔",
-    category: ['all'],
+    react: "💔",
     type: "converter"
-}, (async (message, client, match) => {
+}, (async (message, match) => {
     try {
-        if (message.quoted) {
             match = match || message.quoted.text;
-        }
-        if (!match) return await client.sendMessage(message.from, {
-            text: '*_Need query!_*'
-        }, {
-            quoted: message
-        });
+        if (!match) return await message.send('*_Need query!_*');
         let slang = match.match('\\{([a-z]+)\\}');
         let lang = "en";
         if (slang) {
@@ -23,7 +16,7 @@ inrl({
             match = match.replace(slang[0], '');
         }
         let mm = await TTS(match,lang);
-        return await client.sendMessage(message.from, {
+        return await message.client.sendMessage(message.from, {
             audio: mm,
             mimetype: 'audio/ogg; codecs=opus',
             ptt: false
