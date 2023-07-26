@@ -1,4 +1,4 @@
->const {
+const {
     inrl
 } = require('../lib/'), {
         BASE_URL
