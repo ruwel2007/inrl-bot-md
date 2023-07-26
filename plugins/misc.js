@@ -14,8 +14,7 @@ const {
 inrl({
     pattern: 'calc',
     desc: "to calculate by using bots",
-    sucReact: "🤥",
-    category: ["ibot"],
+    react : "🤥",
     type: 'info'
 }, (async (message, match) => {
     if (match.includes('+')) {
@@ -63,8 +62,7 @@ inrl({
 inrl({
     pattern: 'base64e',
     desc: "to convert ascii to base64",
-    sucReact: "🤌",
-    category: ['all'],
+    react : "🤌",
     type: 'converter'
 }, (async (message, match) => {
     const text = match || message.quoted.text;
@@ -75,8 +73,7 @@ inrl({
 inrl({
     pattern: 'base64d',
     desc: "to convert base64 to ascii",
-    sucReact: "🤥",
-    category: ['all'],
+    react : "🤥",
     type: 'converter'
 }, (async (message, match) => {
     const text = match || message.quoted.text;
@@ -87,8 +84,7 @@ inrl({
 inrl({
     pattern: 'qr',
     desc: "to convert text as qrcode",
-    sucReact: "💗",
-    category: ["all"],
+    react : "💗",
     type: 'create'
 }, async (message, match) => {
     if (!match) return await message.send("_*need Text*_");
@@ -99,8 +95,7 @@ inrl({
 inrl({
     pattern: 'age',
     desc: "to convert text as qrcode",
-    sucReact: "💗",
-    category: ["all"],
+    react : "💗",
     type: 'info'
 }, async (message, match) => {
     if (!match) return await message.send("*_enter your date of birth \n_ex_:year/month/day_*");
