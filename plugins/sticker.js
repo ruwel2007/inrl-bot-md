@@ -18,7 +18,7 @@ inrl(
           "Reply to Supported media With Caption"
         );
     try {
-     if (message.quoted) {
+     if (message.quoted.mime) {
         let download = await message.quoted.download();
         client.sendFile(message.from, download, "", message, {
           asSticker: true,
@@ -36,7 +36,7 @@ inrl(
         });
       } else {
         return await message.send(
-          "Reply to Supported media With Caption"
+          "*_Reply to Supported media With Caption_*"
         );
       }
     } catch (error) {
