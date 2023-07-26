@@ -25,7 +25,7 @@ inrl(
           categories: ["😄", "😊"],
         });
       } else if (/image|video|webp/.test(message.client.mime)) {
-        let download = await client.downloadMediaMessage(message);
+        let download = await message.client.downloadMediaMessage(message);
         message.client.sendFile(message.from, download, "", message, {
           asSticker: true,
           author: STICKER_DATA.split(';')[0],
