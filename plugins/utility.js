@@ -8,7 +8,6 @@ const {
     pdfGen,
     BufferToFile,
     AudioMetaData,
-    getVar
 } = require('../lib')
 const fs = require('fs');
 const {
@@ -18,69 +17,61 @@ const {
 inrl({
     pattern: 'url',
     desc: 'to convert image/sticker/video/audio to url',
-    sucReact: "⛰️",
-    category: ["all"],
+    react: "⛰️",
     type: "converter"
-}, async (message, client, match) => {
+}, async (message, match) => {
     if (!message.client.isMedia) return message.reply('reply to image/sticker/video/audio');
-    return await sendUrl(message, client);
+    return await sendUrl(message, message.client);
 });
 inrl({
     pattern: 'tinyurl',
     desc: "to convert url as small",
-    sucReact: "😛",
-    category: ['all'],
+    react: "😛",
     type: "converter"
-}, async (message, client, match) => {
+}, async (message, match) => {
     if (!match) return message.reply('need url, Example : tinyurl https://github.com/inrl-official');
-    return await tinyUrl(message, client);
+    return await tinyUrl(message, message.client);
 });
 inrl({
     pattern: 'webss',
     desc: "to get web screenshot",
-    sucReact: "⚒️",
-    category: ["all"],
+    react: "⚒️",
     type: "misc"
-}, async (message, client, match) => {
+}, async (message, match) => {
     if (!match) return message.reply('need url, Example : webss https://github.com/inrl-official');
-    return await webSs(message, client);
+    return await webSs(message, message.client);
 });
 inrl({
     pattern: 'pdf',
     desc: "to get pdf of a webpage",
-    sucReact: "⚒️",
-    category: ["all"],
+    react: "⚒️",
     type: "converter"
-}, (async (message, client, match) => {
+}, (async (message, match) => {
     if (!match) return message.reply('need url, Example : pdf https://github.com/inrl-official');
-    return await pdfGen(message, client);
+    return await pdfGen(message, message.client);
 }))
 inrl({
     pattern: 'take',
     desc: "to change aduio metadata as image/title/description",
-    sucReact: "⚒️",
-    category: ["all"],
+    react: "⚒️",
     type: "utility"
-}, async (message, client, match) => {
-    let data = await getVar();
+}, async (message, match, data) => {
     let {
         AUDIO_DATA,
         STICKER_DATA
-    } = data.data[0];
+    } = data;
     try {
-        if (message.quoted == undefined || null) return message.reply('reply to a sticker/audio');
+        if (!message.quoted.sticker && message.quoted.audio) return message.reply('reply to a sticker/audio');
         if (message.quoted.stickerMessage) {
             let pack, auth;
             if (match.includes(';')) {
                 let i = match.split(';');
                 pack = i[0] ? i[0] : STICKER_DATA.split(',')[0];
-                auth = i[1] ? i[1] :  message.pushName
             } else {
                 pack = match || STICKER_DATA.split(';')[0];
-                auth = message.pushName
             }
             let media = await message.quoted.download();
-            return await client.sendFile(message.from, media, "", message, {
+            return await message.client.sendFile(message.from, media, "", message, {
                 asSticker: true,
                 author: auth,
                 packname: pack,
@@ -93,7 +84,7 @@ inrl({
             img = img.trim()
             img = text.split(',')[2] ? text.split(',')[2] : img;
             let imgForaUdio = await getBuffer(img);
-            return await AudioMetaData(imgForaUdio, await message.quoted.download(), message, client);
+            return await AudioMetaData(imgForaUdio, await message.quoted.download(), message);
         }
     } catch (e) {
         return await message.reply(e.toString());
@@ -102,14 +93,12 @@ inrl({
 inrl({
     pattern: 'emojimix',
     desc: "two emojis to single sticker",
-    sucReact: "🤌",
-    category: ["all"],
+    react: "🤌",
     type: "create"
-}, async (message, client, match) => {
-    let data = await getVar();
+}, async (message, match, data) => {
     let {
         STICKER_DATA
-    } = data.data[0];
+    } = data;
     if (!match) return message.send('*send to emojis* \n```ex:❣️+🥵```');
     if (!match.includes('+')) return message.send('*need two emojis*, _Example emojimix_ 🥺+😹');
     let emoji1, emoji2;
@@ -120,7 +109,7 @@ inrl({
     }
     let md = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(emoji1)}_${encodeURIComponent(emoji2)}`)
     for (let res of md.results) {
-        await client.sendFile(message.from, await getBuffer(res.url), "",message, {
+        await message.client.sendFile(message.from, await getBuffer(res.url), "",message, {
           asSticker: true,
           author: STICKER_DATA.split(';')[0],
           packname: STICKER_DATA.split(';')[1],
@@ -128,4 +117,3 @@ inrl({
         });
     }
 })
-
