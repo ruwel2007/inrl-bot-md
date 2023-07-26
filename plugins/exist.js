@@ -8,7 +8,7 @@ inrl({
     fromMe: true,
     desc: 'List number in whatsapp',
     type: 'search',
-}, async (m, conn, match) => {
+}, async (m, match) => {
     if (!match) return await m.send('_give me a number *Ex :917025099xx*_');
     if (!match.match('x')) return await m.send('_give me a number in valid Format! *Ex :917025099xx*_');
     let xlength = match.replace(/[0-9]/gi, '')
@@ -19,7 +19,7 @@ inrl({
     let bcs = [],
         notFound = []
     ioo.map(async (a) => {
-        let [rr] = await conn.onWhatsApp(a)
+        let [rr] = await m.sock.onWhatsApp(a)
         if (rr && rr.exists) {
             bcs.push(rr.jid);
         }
@@ -30,7 +30,7 @@ inrl({
     await sleep(2500);
     msg += `*Exist on Whatsapp* (${bcs.length}/${count})\n`,
         bcs.map(async (jid) => {
-            abt = await conn.fetchStatus(jid).catch((e) => {
+            abt = await m.sock.fetchStatus(jid).catch((e) => {
                 notFound.push(jid);
             });
             if (!abt.status) {
@@ -63,7 +63,7 @@ inrl({
     fromMe: true,
     desc: 'List number Thet Not Exist whatsapp',
     type: 'search',
-}, async (m, conn, match) => {
+}, async (m, match) => {
     if (!match) return await m.send('_give me a number *Ex :917025099xx*_');
     if (!match.match('x')) return await m.send('_give me a number in valid Format! *Ex :917025099xx*_');
     let xlength = match.replace(/[0-9]/gi, '')
@@ -73,7 +73,7 @@ inrl({
     let ioo = await getCompo(match)
     let bcs = "*Number Not Exist On whatsApp*\n\n*_total result_*:-{}\n", n=1;
     ioo.map(async (a) => {
-        let [rr] = await conn.onWhatsApp(a).catch((e)=>console.log(e))
+        let [rr] = await m.sock.onWhatsApp(a).catch((e)=>console.log(e))
         if (!rr) bcs += "```wa.me/"+a+"```\n";
     });
     await sleep(2000)
