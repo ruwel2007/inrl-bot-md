@@ -9,9 +9,7 @@ const {
     base64e,
     base64d,
     age,
-    getVar
 } = require('../lib/');
-const got = require('got');
 
 inrl({
     pattern: 'calc',
@@ -19,78 +17,46 @@ inrl({
     sucReact: "🤥",
     category: ["ibot"],
     type: 'info'
-}, (async (message, client) => {
-    if (message.client.text.includes('+')) {
-        let split = message.client.text.split('+');
+}, (async (message, match) => {
+    if (match.includes('+')) {
+        let split = match.split('+');
         let number2 = split[1];
         let number1 = split[0]
         let result = add(number1, number2)
         try {
-            await client.sendMessage(message.from, {
-                text: result
-            }, {
-                quoted: message
-            })
+            return await message.send(result);
         } catch (err) {
-            return await client.sendMessage(message.from, {
-                text: "error=" + err
-            }, {
-                quoted: message
-            })
+            return await message.send("*Failed*");
         }
-    } else if (message.client.text.includes('-')) {
-        let split = message.client.text.split('-'),
+    } else if (match.includes('-')) {
+        let split = match.split('-'),
             inrlsub1 = split[1],
             inrlsub2 = split[0]
         let result = subtract(inrlsub2, inrlsub1)
         try {
-            await client.sendMessage(message.from, {
-                text: result
-            }, {
-                quoted: message
-            })
+            return await message.send(result);
         } catch (err) {
-            return await client.sendMessage(message.from, {
-                text: "error=" + err
-            }, {
-                quoted: message
-            })
+            return await message.send("*Failed*");
         }
-    } else if (message.client.text.includes('×')) {
-        let split = message.client.text.split('×'),
+    } else if (match.includes('×')) {
+        let split = match.split('×'),
             inrlbotswa = split[1],
             inrl1 = split[0]
         let result = multiply(inrl1, inrlbotswa)
         try {
-            await client.sendMessage(message.from, {
-                text: result
-            }, {
-                quoted: message
-            })
+            return await message.send(result);
         } catch (err) {
-            return await client.sendMessage(message.from, {
-                text: "error=" + err
-            }, {
-                quoted: message
-            })
+            return await message.send("*Failed*");
         }
-    } else if (message.client.text.includes('/')) {
-        let split = message.client.text.split('/'),
+    } else if (match.includes('/')) {
+        let split = match.split('/'),
             inrldiv1 = split[1],
             inrldiv2 = split[0]
         let result = division(inrldiv2, inrldiv1)
         try {
-            await client.sendMessage(message.from, {
-                text: result
-            }, {
-                quoted: message
-            })
+            return await message.send(result);
         } catch (err) {
-            return await client.sendMessage(message.from, {
-                text: "error=" + err
-            }, {
-                quoted: message
-            })
+            return await message.send("*Failed*");
         }
     }
 }));
@@ -100,19 +66,11 @@ inrl({
     sucReact: "🤌",
     category: ['all'],
     type: 'converter'
-}, (async (message, client) => {
-    const text = message.client.text || message.quoted.text;
-    if (!text) return await client.sendMessage(message.from, {
-        text: 'Enter A text to convert base64'
-    }, {
-        quoted: message
-    });
+}, (async (message, match) => {
+    const text = match || message.quoted.text;
+    if (!text) return await message.send("*_Enter A text to convert base64_*");
     let encodedString = base64e(text);
-    return await client.sendMessage(message.from, {
-        text: encodedString
-    }, {
-        quoted: message
-    });
+    return await message.send(encodedString);
 }));
 inrl({
     pattern: 'base64d',
@@ -120,19 +78,11 @@ inrl({
     sucReact: "🤥",
     category: ['all'],
     type: 'converter'
-}, (async (message, client) => {
-    const text = message.client.text || message.quoted.text;
-    if (!text) return await client.sendMessage(message.from, {
-        text: 'Enter A text to convert base64'
-    }, {
-        quoted: message
-    });
+}, (async (message, match) => {
+    const text = match || message.quoted.text;
+    if (!text) return await message.send("_Enter A text to convert base64_");
     let decodedString = base64d(text);
-    return await client.sendMessage(message.from, {
-        text: decodedString
-    }, {
-        quoted: message
-    });
+    return await message.send(decodedString);
 }));
 inrl({
     pattern: 'qr',
@@ -140,27 +90,11 @@ inrl({
     sucReact: "💗",
     category: ["all"],
     type: 'create'
-}, async (message, client) => {
-    if (!message.client.text) return await client.sendMessage(message.from, {
-        text: "need Text",
-    }, {
-        quoted: message
-    })
-    let text = message.client.text;
+}, async (message, match) => {
+    if (!match) return await message.send("_*need Text*_");
+    let text = match;
     let ttinullimage = qrcode(text);
-    let data = await getVar();
-    let {
-        CAPTION
-    } = data.data[0]
-    const Message = {
-        image: {
-            url: ttinullimage
-        },
-        caption: CAPTION
-    };
-    return await client.sendMessage(message.from, Message, {
-        quoted: message
-    })
+    return await message.sendReply(ttinullimage,{},"image");
 });
 inrl({
     pattern: 'age',
@@ -168,13 +102,9 @@ inrl({
     sucReact: "💗",
     category: ["all"],
     type: 'info'
-}, async (message, client) => {
-    if (!message.client.text) return await client.sendMessage(message.from, {
-        text: " enter your date of birth \n_ex_:year/month/day",
-    }, {
-        quoted: message
-    })
-    let text = message.client.text;
+}, async (message, match) => {
+    if (!match) return await message.send("*_enter your date of birth \n_ex_:year/month/day_*");
+    let text = match;
     let year, month, day;
     if (text.includes('/')) {
         let split = text.split('/');
@@ -183,9 +113,5 @@ inrl({
         day = split[2];
     }
     let ageOfYou = age(new Date(year, month, day));
-    return await client.sendMessage(message.from, {
-        text: ageOfYou
-    }, {
-        quoted: message
-    })
+    return await message.send(ageOfYou);
 });
