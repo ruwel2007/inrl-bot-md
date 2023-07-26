@@ -1,24 +1,21 @@
 // created by @inrl
 
-const { inrl,getVar }= require('../lib/');
+const { inrl }= require('../lib/');
 const fs = require('fs');
 
 
-inrl({ pattern: 'send', desc: "it send wa status",sucReact: "⚒️",  category: ["owner"],type :"whatsapp"}, (async (message, client) => {
-  let data = await getVar();
-  let {CAPTION}=data.data[0];
-  let cap;
-if(!message.quoted) return message.reply("reply to image/video!")
+inrl({ pattern: 'send', DismissPrefix: true, desc: "it send wa status",sucReact: "⚒️",  category: ["owner"],type :"whatsapp"}, (async (message, match) => {
+if(!message.quoted.msg) return message.reply("*_reply to image/video!_*")
 if (message.quoted.videoMessage) {
-cap = message.quoted?.videoMessage?.caption || CAPTION;
+caption = message.quoted?.videoMessage?.captiontion;
 let location = await message.quoted.download();
-return await client.sendMessage(message.from, { video: location, caption: cap });
+return await message.client.sendMessage(message.jid, { video: location, captiontion: caption });
 }else if (message.quoted.imageMessage) {
-cap = message.quoted?.imageMessage?.caption || CAPTION;
+caption = message.quoted?.imageMessage?.captiontion;
 let location = await message.quoted.download()
-return await client.sendMessage(message.from, { image: location, caption: cap });
+return await message.client.sendMessage(message.jid, { image: location, captiontion: caption });
    } else if(message.quoted.audioMessage){
 let location = await message.quoted.download()
-return await client.sendMessage(message.from, { audio: location, mimetype: "audio/mp4",ptt: false});
+return await message.client.sendMessage(message.jid, { audio: location, mimetype: "audio/mp4",ptt: false});
 }
 }));
