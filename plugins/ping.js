@@ -3,10 +3,9 @@ const {inrl} = require('../lib');
 inrl({
     pattern: 'ping ?(.*)',
     desc: 'To check ping',
-    sucReact: "💯",
-    category: ["system", "all"],
+    react: "💯",
     type: 'info'
-}, async (message, client) => {
+}, async (message, match) => {
     const start = new Date().getTime()
     const {key} = await message.reply('Ping!')
     const end = new Date().getTime()
