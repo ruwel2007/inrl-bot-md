@@ -27,9 +27,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "converter"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.stickerMessage) return message.reply('reply to a sticker');
-    return await sendPhoto(message, client);
+    return await sendPhoto(message);
 });
 inrl({
     pattern: 'video',
@@ -37,10 +37,10 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "converter"
-}, async (message, client) => {
-    if (!message.quoted.stickerMessage && !message.reply_message.text && !message.client.text) return message.reply('_*reply to a sticker*_');
+}, async (message, match) => {
+    if (!message.quoted.stickerMessage && !message.reply_message.text && !match) return message.reply('_*reply to a sticker*_');
     if(!message.quoted.stickerMessage) return;
-    return await sendVideo(message, client)
+    return await sendVideo(message)
 });
 inrl({
     pattern: 'voice',
@@ -48,9 +48,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "converter"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendVoice(message, client)
+    return await sendVoice(message)
 });
 inrl({
     pattern: 'gif',
@@ -58,10 +58,10 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "converter"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted) return;
     if (!message.quoted.stickerMessage || message.quoted.videoMessage) return message.reply('reply to sticker/video');
-    return await sendGif(message, client)
+    return await sendGif(message)
 });
 inrl({
     pattern: 'bass',
@@ -69,9 +69,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendBassAudio(message, client)
+    return await sendBassAudio(message)
 });
 inrl({
     pattern: 'slow',
@@ -79,9 +79,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendSlowAudio(message, client)
+    return await sendSlowAudio(message)
 });
 inrl({
     pattern: 'blown',
@@ -89,9 +89,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendBlownAudio(message, client)
+    return await sendBlownAudio(message)
 });
 inrl({
     pattern: 'deep',
@@ -99,9 +99,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendDeepAudio(message, client);
+    return await sendDeepAudio(message);
 });
 inrl({
     pattern: 'earrape',
@@ -109,9 +109,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendErrapeAudio(message, client)
+    return await sendErrapeAudio(message)
 });
 inrl({
     pattern: 'fast',
@@ -119,9 +119,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendFastAudio(message, client)
+    return await sendFastAudio(message)
 });
 inrl({
     pattern: 'fat',
@@ -129,9 +129,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendFatAudio(message, client);
+    return await sendFatAudio(message);
 });
 inrl({
     pattern: 'nightcore',
@@ -139,9 +139,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendNightcoreAudio(message, client);
+    return await sendNightcoreAudio(message);
 });
 inrl({
     pattern: 'reverse',
@@ -149,9 +149,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendReverseAudio(message, client);
+    return await sendReverseAudio(message);
 });
 inrl({
     pattern: 'squirrel',
@@ -159,9 +159,9 @@ inrl({
     sucReact: "⚒️",
     category: ["all"],
     type: "audio-edit"
-}, async (message, client) => {
+}, async (message) => {
     if (!message.quoted.audioMessage) return message.reply('_*reply to an audio/voice*_');
-    return await sendSquirrelAudio(message, client);
+    return await sendSquirrelAudio(message);
 });
 
 inrl({
@@ -170,7 +170,7 @@ inrl({
     sucReact: "💥",
     category: ['all'],
     type: "converter"
-}, (async (message, client) => {
+}, (async (message) => {
     if (!message.quoted.audioMessage && !message.quoted.videoMessage) return message.reply('_*reply to an video/mp4*_');
-    return await sendMp4AsMp3(message, client)
+    return await sendMp4AsMp3(message)
 }));
