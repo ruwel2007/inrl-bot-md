@@ -9,52 +9,49 @@ const {
 inrl({
     pattern: 'google',
     desc: 'do get goole serch result',
-    sucReact: "🙃",
-    category: ["system", "all"],
+    react : "🙃",
     type: "search"
-}, async (message, client) => {
+}, async (message, match) => {
     try {
-        if (!message.client.text) return message.send("need a text to serch");
-        let teks = await googleIt(message.client.text);
-        return await client.sendMessage(message.from, {
+        if (!match) return message.send("need a text to serch");
+        let teks = await googleIt(match);
+        return await message.client.sendMessage (message.from, {
             text: "\n" + teks
         }, {
             quoted: message
         })
     } catch (e) {
-        message.send("error" + e)
+        message.send("*Failed*");
     }
 });
 inrl({
     pattern: 'ringtone',
     desc: 'do get random ringtons ',
-    sucReact: "🙃",
-    category: ["system", "all"],
+    react : "🙃",
     type: "search"
-}, async (message, client) => {
+}, async (message, match) => {
     try {
-        if (!message.client.text) return message.send("need a text to serch");
-        let result = await ringtone(message.client.text), res=[];
+        if (!match) return message.send("need a text to serch");
+        let result = await ringtone(match), res=[];
         await result.map(r=>res.push(r.title));
-        return await client.sendMessage(message.jid, {
+        return await message.client.sendMessage (message.jid, {
             text: GenListMessage("AVAILABLE RINGTONES", res)
             });
      } catch (e) {
-        message.send(e)
+        message.send("*Failed*");
     }
 });   
 
 inrl({
     pattern: 'weather',
     desc: 'To get detiles of you place',
-    sucReact: "🔥",
-    category: ["system", "all"],
+    react : "🔥",
     type: "search"
-}, async (message, client, match) => {
+}, async (message, match) => {
     try {
-        return await weather(message, client);
+        return await weather(message);
     } catch (e) {
-        return message.send(e);
+        return message.send("*Failed*");
     }
 });
 
@@ -62,13 +59,13 @@ inrl({
     pattern: 'dl-ringtone',
     type: "downloader",
     on: "text"
-}, async (m, conn, match) => {
+}, async (m, match) => {
     if (!m.quoted || !m.quoted.fromMe) return;
     if(!m.client.body.includes("AVAILABLE RINGTONES")) return;
     match = m.client.body.replace("AVAILABLE RINGTONES", "").trim();
     await m.send("*_downloading_*:-\n\n"+match);
     let result = await ringtone(match);
-    return await conn.sendMessage(m.jid, {
+    return await m.conn.sendMessage(m.jid, {
     audio:{
                 url: result[0].audio
             },
