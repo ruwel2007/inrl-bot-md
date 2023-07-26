@@ -64,8 +64,8 @@ inrl({
     pattern: 'ytdl',
     type: "downloader",
     on: "text"
-}, async (m, conn, match) => {
-    if (!m.quoted || !m.quoted.fromMe) return;
+}, async (m, match) => {
+    if (!m.quoted.fromMe) return;
     try {
         if (m.client.body.includes("YT VIDEO DOWNLOADER")) {
             match = m.client.body.replace("YT VIDEO DOWNLOADER", "").trim();
