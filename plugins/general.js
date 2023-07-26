@@ -1,4 +1,4 @@
-const {
+>const {
     inrl
 } = require('../lib/'), {
         BASE_URL
@@ -9,21 +9,19 @@ inrl({
     sucReact: "🤝",
     category: ["all", "create"],
     type: "eva"
-}, async (message, client, match) => {
+}, async (message, match) => {
     try {
-        if (message.quoted) {
             match = match || message.quoted.text;
-        }
-        if (!match) return await message.reply('need text to get ai result');
+        if (!match) return await message.reply('_need text to get ai result_');
         let {
             data
         } = await axios(`${BASE_URL}api/chatgpt?text=${match}`);
         body = data.result;
-        return await client.sendMessage(message.from, {
+        return await message.client.sendMessage(message.from, {
             text: body
         });
     } catch (e) {
-        return await message.send('provided API is not valid');
+        return await message.send('_provided API is not valid_');
     }
 });
 inrl({
@@ -31,7 +29,7 @@ inrl({
     sucReact: "🤝",
     category: ["all", "create"],
     type: "user"
-}, async (message, client, match) => {
+}, async (message, match) => {
     let ttinullimage = `${BASE_URL}server/scan`;
     const Message = {
         image: {
@@ -39,7 +37,7 @@ inrl({
         },
         caption: "scan within 23.5 seconds"
     };
-    return await client.sendMessage(message.from, Message).catch((e) => message.reply('_undefined error_ *pleaee try again later*'));
+    return await message.message.client.sendMessage(message.from, Message).catch((e) => message.reply('*_Failed_*'));
 });
 inrl({
     pattern: 'jid',
@@ -47,15 +45,15 @@ inrl({
     sucReact: "💯",
     category: ["system", "all"],
     type: "general"
-}, async (message, client) => {
+}, async (message) => {
     if (message.quoted.sender) {
-        await client.sendMessage(message.from, {
+        await message.message.client.sendMessage(message.from, {
             text: message.quoted.sender
         }, {
             quoted: message
         })
     } else {
-        await client.sendMessage(message.from, {
+        await message.message.client.sendMessage(message.from, {
             text: message.from
         }, {
             quoted: message
@@ -69,11 +67,11 @@ inrl({
     category: ["system", "all"],
     type: "owner",
     fromMe :true
-}, async (message, client) => {
+}, async (message) => {
     if (message.isGroup) {
-        await client.updateBlockStatus(message.quoted.sender, "block") // Block user
+        await message.client.updateBlockStatus(message.quoted.sender, "block") // Block user
     } else {
-        await client.updateBlockStatus(message.from, "block")
+        await message.client.updateBlockStatus(message.from, "block")
     }
 }); // Block user
 inrl({
@@ -83,12 +81,11 @@ inrl({
     category: ["system", "all"],
     type: "owner",
     fromMe :true
-}, async (message, client) => {
-    if (!message.client.isCreator) return message.send("only for owner!");
+}, async (message) => {
     if (message.isGroup) {
-        await client.updateBlockStatus(message.quoted.sender, "unblock") // Unblock user
+        await message.client.updateBlockStatus(message.quoted.sender, "unblock") // Unblock user
     } else {
-        await client.updateBlockStatus(message.from, "unblock") // Unblock user
+        await message.client.updateBlockStatus(message.from, "unblock") // Unblock user
     }
 });
 inrl({
@@ -98,38 +95,41 @@ inrl({
     category: ["system", "all"],
     type: "utility",
     fromMe :true
-}, async (message, client, match) => {
+}, async (message, match) => {
     if (!match) {
-        return client.sendMessage(message.from, {
+        return message.message.client.sendMessage(message.from, {
             text: "after the (cmd) enter the jid to share your data \n_example :- forward 910123456789@s.whatsapp.net_"
         });
     }
+    try {
     let jid = match;
-    if (!message.quoted) return message.reply('need forwarding content! Image/video/audio/sticker/text');
     if (message.quoted.imageMessage) {
         let msg = await message.quoted.download();
-        await client.sendMessage(jid, {
+        await message.client.sendMessage(jid, {
             image: msg
         });
     } else if (message.quoted.stickerMessage) {
         let msg = await message.quoted.download();
-        await client.sendMessage(jid, {
+        await message.client.sendMessage(jid, {
             sticker: msg
         });
     } else if (message.quoted.videoMessage) {
         let msg = await message.quoted.download();
-        await client.sendMessage(jid, {
+        await message.client.sendMessage(jid, {
             video: msg
         });
     } else if (message.quoted.audioMessage) {
         let msg = await message.quoted.download();
-        await client.sendMessage(jid, {
+        await message.client.sendMessage(jid, {
             audio: msg
         });
     } else {
-        return await client.sendMessage(message.from, {
+        return await message.client.sendMessage(message.from, {
             text: "replay to a message with a jid"
         });
+    }
+    } catch(e){
+    return message.send('_*Failed*_');
     }
 });
 inrl({
@@ -139,11 +139,10 @@ inrl({
     category: ["system", "all"],
     type: "utility",
     fromMe :true
-}, async (message, client, match) => {
+}, async (message, match) => {
     try {
         let pp, from, cap;
         if (message.isGroup) {
-            if (!message.quoted) return;
             from = message.quoted.sender;
             try {
                 pp = await client.profilePictureUrl(from, 'image')
@@ -154,9 +153,9 @@ inrl({
             let {
                 status,
                 setAt
-            } = await client.fetchStatus(from)
+            } = await message.client.fetchStatus(from)
             let captiOn = "```" /*user : ${name}\nid : ${id}\n*/ + `status :${status}\nstatus setAt : ${setAt}` + "```";
-            await client.sendMessage(message.from, {
+            await message.client.sendMessage(message.from, {
                 image: {
                     url: pp
                 },
@@ -167,7 +166,7 @@ inrl({
         } else {
             from = message.from;
             try {
-                pp = await client.profilePictureUrl(from, 'image')
+                pp = await message.client.profilePictureUrl(from, 'image')
             } catch {
                 pp = 'https://i.ibb.co/gdp7HrS/8390ad4fefbd.jpg'
             }
@@ -175,9 +174,9 @@ inrl({
             let {
                 status,
                 setAt
-            } = await client.fetchStatus(from)
+            } = await message.client.fetchStatus(from)
             let captiOn = "```" /*user : ${name}\nid : ${id}\n*/ + `status :${status}\nstatus setAt : ${setAt}` + "```";
-            await client.sendMessage(message.from, {
+            await message.client.sendMessage(message.from, {
                 image: {
                     url: pp
                 },
