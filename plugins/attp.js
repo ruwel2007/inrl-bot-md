@@ -8,11 +8,10 @@ const {
 inrl({
     pattern: "ttp",
     type: "misc"
-}, async (message, client) => {
-    if (!message.client.text) return await message.send("need text");
-    const uri = encodeURI(message.client.text);
-    const res = `${BASE_URL}api/ttp?text=${uri}`
-    return await client.sendMessage(message.jid, {
+}, async (message, match) => {
+    if (!match) return await message.send("*_need text_*");
+    const res = `${BASE_URL}api/ttp?text=${match}`
+    return await message.client.sendMessage(message.jid, {
         image: {
             url: res
         }
@@ -21,11 +20,10 @@ inrl({
 inrl({
     pattern: "attp",
     type: "misc"
-}, async (message, client) => {
-    if (!message.client.text) return await message.send("need text");
-    const uri = encodeURI(message.client.text);
-    const res = await getBuffer(`${BASE_URL}api/attp?text=${uri}`);
-    return await client.sendFile(message.chat, res, "", message, {
+}, async (message, match) => {
+    if (!match) return await message.send("*_need text_*");
+    const res = await getBuffer(`${BASE_URL}api/attp?text=${match}`);
+    return await message.client.sendFile(message.chat, res, "", message, {
         asSticker: true,
         categories: ["😑"],
     });
