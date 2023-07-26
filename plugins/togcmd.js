@@ -6,13 +6,13 @@ const {
         getTog
 } = require('../lib/')
 inrl({
-        pattern: 'tog ?(.*)',
+        pattern: 'toggle ?(.*)',
         fromMe: true,
         desc: 'Enable or Disable Cmd',
         type: 'misc',
-}, async (message, client, match) => {
+}, async (message, match) => {
         if (match == 'list') {
-                let res = await getTog(),
+                let res = await getTog(message.cclient.user.id),
                         list = "_list of tog cmds!_\n\n"
                 if (res == 'no data') return await message.send('_Not Found_');
                 let n = 1;
