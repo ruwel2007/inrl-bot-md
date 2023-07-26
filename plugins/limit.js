@@ -19,7 +19,7 @@ inrl({
     type: "action",
     onlyPm: true,
     fromMe: 'public'
-}, async (m, client, match, cmd) => {
+}, async (m, match) => {
     const user = m.sender.split('@')[0];
     if (!match) return await m.send("*incorrect format*\n```ex:-``` *permit email-ID*");
     if (match == "remove") {
@@ -40,7 +40,7 @@ inrl({
     type: "action",
     onlyPm: true,
     fromMe: 'public'
-}, async (m, client, match, cmd) => {
+}, async (m, match) => {
     const user = m.sender.split('@')[0];
     const ver = await IsMailed(user);
     if (!ver) return await m.send("_not mailed yet!_");
@@ -55,8 +55,8 @@ inrl({
     type: "action",
     onlyPm: true,
     fromMe: true
-}, async (m, client, match, cmd) => {
-    if (!m.quoted) return await m.reply('```<reply> to an user```');
+}, async (m, match) => {
+    if (!m.quoted.sender) return await m.reply('```<reply> to an user```');
     const user = m.quoted.sender.split('@')[0];
     const valid = await isVerified(user);
     if (!valid) return await m.reply('```user must be verified befor giving limit```');
