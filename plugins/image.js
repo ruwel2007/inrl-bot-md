@@ -11,16 +11,15 @@ const fs = require('fs');
 inrl({
     pattern: "rmbg",
     desc: 'To remove bg of any image',
-    sucReact: "😉",
-    category: ["system", "all", "create", "photo", "fun"],
+    react: "😉",
     type: "converter",
     usage: "give png image without background for your img request"
-}, async (message, client, match) => {
+}, async (message, match) => {
     if (!message.reply_message.image) return message.reply('*_reply to a img msg!_*')
-    let img = await client.downloadAndSaveMediaMessage(message.quoted.imageMessage)
+    let img = await message.client.downloadAndSaveMediaMessage(message.quoted.imageMessage)
     let rmbgimg = await remove(fs.readFileSync(img))
     // let rmbg = await fs.writeFile('./media/rmbg/isexit.jpg', rmbgimg)
-    await client.sendMessage(message.chat, {
+    await message.client.sendMessage(message.chat, {
         image: rmbgimg,
     }, {
         quoted: message
@@ -30,21 +29,27 @@ inrl({
 inrl({
     pattern: "img",
     usage: 'send google image result for give text',
-    sucReact: "🖼",
-    category: ["search", "all"],
+    react: "🖼",
     type: "search"
-}, async (message, client, match) => {
+}, async (message, match) => {
     if (!match) {
-        return await client.sendMessage(message.from, {
+        return await message.client.sendMessage(message.from, {
             text: '*_Give Me A Text To Search_*'
         }, {
             quoted: message
         });
     }
     let count = 1
-    if(match.includes(";")) match = match.split(';')[0];count=match.split(';')[1];
-    if(!String(count).replace(/[^0-9]/g,'')) {count=1}else{count = String(count).replace(/[^0-9]/g,'')};
-    if(!Number(count)>3 && !message.client.isCreator) return await message.reply("*_Only Owner can use more then 3 image Search At at a Tiem_*");
+    if(match.includes(";")) {
+    match = match.split(';')[0];
+    count=match.split(';')[1];
+    }
+    if(!count.toString().replace(/[^0-9]/g,'')) {
+    count=1
+    } else{
+    count = count.toString().replace(/[^0-9]/g,'')
+    };
+    if(Number(count)>3 && !message.client.isCreator) return await message.reply("*_Only Owner can use more then 3 image Search At at a Tiem_*");
     const {data} = await axios(BASE_URL+'api/gis?text='+match+`&count=${count}`);
     const {result} = data;
     if(!result[0]) return await message.send('_Not Found_');
