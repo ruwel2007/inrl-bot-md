@@ -12,7 +12,7 @@ inrl({
     category: ["system", "all"],
     type: "action",
     fromMe :true
-}, async (message, client, match, cmd) => {
+}, async (message, match) => {
     if (!message.reply_message.sticker) return await message.reply("*_reply to a sticker msg and give me cmd name_*\ne_x: setcmd ping_");
     if (!message.reply_message.msg.fileSha256) return message.send("_*Failed To Save Your Media Message!*_")
     if (!match) return await message.send("*_For Which Cmd!_*")
@@ -26,7 +26,7 @@ inrl({
     category: ["system", "all"],
     type: "action",
     fromMe :true
-}, async (message, client, match, cmd) => {
+}, async (message, match) => {
     if (!match) return await message.send("_*which cmd!*_")
     await DeleteCmd(match)
     return await message.reply("_successfull_")
@@ -38,7 +38,7 @@ inrl({
     category: ["system", "all"],
     type: "action",
     fromMe :true
-}, async (message, client, match, cmd) => {
+}, async (message, match) => {
     let data = await getCmd(),
         cmds = "*Totel Cmds*";
     if (data == "no data") return message.send('_*no sticker cmd in your db!*_')
