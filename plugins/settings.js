@@ -20,7 +20,8 @@ inrl({
     type: "system",
     on: "text",
     fromMe: true
-}, async (m, conn, text, cmd, data) => {
+}, async (m, text, data) => {
+    if(!m.reply_message.fromMe) return;
     match = m.client.body.toLowerCase();
     if (!match.includes('settings updater')) return;
     match = match.replace('settings updater', '').trim();
@@ -148,7 +149,8 @@ inrl({
     type: "system",
     on: "text",
     fromMe: true
-}, async (m, conn, text, cmd, data) => {
+}, async (m, text, data) => {
+    if(!m.reply_message.fromMe) return;
     if (!m.client.body.includes('status')) return;
     match = m.client.body.toLowerCase();
     if (match.includes('allways_online')) {
