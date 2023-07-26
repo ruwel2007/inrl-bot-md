@@ -5,7 +5,7 @@ inrl({
     type: "owner",
     onlyGroup :true
 }, async (message, match) => {
-    if(!match && !message.quoted) return;
+    if(!match && !message.quoted.text) return;
     const groupMetadata = await message.client.groupMetadata(message.from).catch(e => {})
     const participants = await groupMetadata.participants
     let admins = await participants.filter(v => v.admin !== null).map(v => v.id)
