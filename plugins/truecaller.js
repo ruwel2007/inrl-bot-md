@@ -11,8 +11,7 @@ const {
 inrl({
     pattern: 'true',
     desc: 'To check ping',
-    sucReact: "💯",
-    category: ["system", "all"],
+    react: "💯",
     type: "search"
 }, async (message, client, match) => {
     if (match || message.quoted.sender)  return await message.reply('*_need user_*');
