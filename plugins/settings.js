@@ -156,66 +156,66 @@ inrl({
     if (match.includes('allways_online')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("ALLWAYS_ONLINE", updt);
+        await UpdateVariable("ALLWAYS_ONLINE", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('anti_spam')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("ANTI_SPAM", updt);
+        await UpdateVariable("ANTI_SPAM", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('react')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("REACT", updt);
+        await UpdateVariable("REACT", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('auto_bio')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("AUTO_BIO", updt);
+        await UpdateVariable("AUTO_BIO", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_\n```try restart to activate```");
     } else if (match.includes('read_chat')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("READ_CHAT", updt);
+        await UpdateVariable("READ_CHAT", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('bgmbot')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("BGMBOT", updt);
+        await UpdateVariable("BGMBOT", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('worktype')) {
         let updt = match.split(" ").pop();
         updt = updt == "public" ? 'private' : 'public';
-        await UpdateVariable("WORKTYPE", updt);
+        await UpdateVariable("WORKTYPE", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_\n```restart to run with new variable```");
     } else if (match.includes('pm_block')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("PM_BLOCK", updt);
+        await UpdateVariable("PM_BLOCK", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('call_block')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("CALL_BLOCK", updt);
+        await UpdateVariable("CALL_BLOCK", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('status_view')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("STATUS_VIEW", updt);
+        await UpdateVariable("STATUS_VIEW", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('auto_chat_pm')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("AUTO_CHAT_PM", updt);
+        await UpdateVariable("AUTO_CHAT_PM", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('auto_chat_grp')) {
         let updt = match.split(" ").pop();
         updt = updt == "true" ? 'false' : 'true';
-        await UpdateVariable("AUTO_CHAT_GRP", updt);
+        await UpdateVariable("AUTO_CHAT_GRP", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     } else if (match.includes('available') || match.includes('composing') || match.includes('recording') || match.includes('paused')) {
         let updt = match.split(" ")[0]
-        await UpdateVariable("BOT_PRESENCE", updt);
+        await UpdateVariable("BOT_PRESENCE", updt, m.client.user.id.split('@')[0]);
         return await m.reply("_*requested to the db*_");
     }
 });
