@@ -6,8 +6,7 @@ const {
     axios = require('axios');
 inrl({
     pattern: "$gpt",
-    sucReact: "🤝",
-    category: ["all", "create"],
+    react : "🤝",
     type: "eva"
 }, async (message, match) => {
     try {
@@ -26,8 +25,7 @@ inrl({
 });
 inrl({
     pattern: "scan",
-    sucReact: "🤝",
-    category: ["all", "create"],
+    react : "🤝",
     type: "user"
 }, async (message, match) => {
     let ttinullimage = `${BASE_URL}server/scan`;
@@ -42,8 +40,7 @@ inrl({
 inrl({
     pattern: 'jid',
     desc: 'To get jid off member',
-    sucReact: "💯",
-    category: ["system", "all"],
+    react : "💯",
     type: "general"
 }, async (message) => {
     if (message.quoted.sender) {
@@ -63,8 +60,7 @@ inrl({
 inrl({
     pattern: 'block',
     desc: 'To block a person',
-    sucReact: "💯",
-    category: ["system", "all"],
+    react : "💯",
     type: "owner",
     fromMe :true
 }, async (message) => {
@@ -77,8 +73,7 @@ inrl({
 inrl({
     pattern: 'unblock',
     desc: 'To unblock a person',
-    sucReact: "💯",
-    category: ["system", "all"],
+    react : "💯",
     type: "owner",
     fromMe :true
 }, async (message) => {
@@ -91,8 +86,7 @@ inrl({
 inrl({
     pattern: 'frd',
     desc: 'for sending a message  by thir jid',
-    sucReact: "😉",
-    category: ["system", "all"],
+    react : "😉",
     type: "utility",
     fromMe :true
 }, async (message, match) => {
@@ -135,8 +129,7 @@ inrl({
 inrl({
     pattern: 'whois',
     desc: 'it send information of user',
-    sucReact: "💯",
-    category: ["system", "all"],
+    react : "💯",
     type: "utility",
     fromMe :true
 }, async (message, match) => {
@@ -145,7 +138,7 @@ inrl({
         if (message.isGroup) {
             from = message.quoted.sender;
             try {
-                pp = await client.profilePictureUrl(from, 'image')
+                pp = await message.client.profilePictureUrl(from, 'image')
             } catch {
                 pp = 'https://i.ibb.co/gdp7HrS/8390ad4fefbd.jpg'
             }
