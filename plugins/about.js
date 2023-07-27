@@ -79,7 +79,8 @@ inrl({
     if(match == "get" && message.client.isCreator){
     return await message.send(data.ALIVE_DATA);
     } else if(match && message.client.isCreator){
-    return await  UpdateVariable("ALIVE_DATA", match.trim(),message.conn.user.id.split(':')[0]);
+    await  UpdateVariable("ALIVE_DATA", match.trim(),message.conn.user.id.split(':')[0]);
+    return await message.send('*success*');
     }
     return await send_alive(message, data);
 });
