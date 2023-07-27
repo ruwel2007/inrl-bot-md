@@ -23,8 +23,8 @@ inrl({
     onlyGroup: true
 }, async (message, match) => {
     try {
-        let admin = await isAdmin(message, client);
-        let BotAdmin = await isBotAdmin(message, client);
+        let admin = await isAdmin(message);
+        let BotAdmin = await isBotAdmin(message);
         if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
         if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
         if (!message.quoted.sender) return message.reply('*_reply to a user_*');
@@ -47,8 +47,8 @@ inrl({
     type: 'group',
     onlyGroup: true
 }, async (message, match) => {
-    let admin = await isAdmin(message, client);
-    let BotAdmin = await isBotAdmin(message, client);
+    let admin = await isAdmin(message);
+    let BotAdmin = await isBotAdmin(message);
     try {
         if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
         if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
@@ -72,8 +72,8 @@ inrl({
     type: 'group',
     onlyGroup: true
 }, async (message, match) => {
-    let admin = await isAdmin(message, client);
-    let BotAdmin = await isBotAdmin(message, client);
+    let admin = await isAdmin(message);
+    let BotAdmin = await isBotAdmin(message);
     try {
         if (!match) {
             if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
@@ -113,8 +113,8 @@ inrl({
     type: 'group',
     onlyGroup: true
 }, async (message, match) => {
-    const BotAdmin = await isBotAdmin(message, client);
-    const admin = await isAdmin(message, client);
+    const BotAdmin = await isBotAdmin(message);
+    const admin = await isAdmin(message);
     match = message.reply_message.text || match;
     if(!match) return await message.reply('_*give me a number to add*_');
     match = match.replaceAll(' ', '');
@@ -222,8 +222,8 @@ inrl({
     onlyGroup: true
 }, async (message, match) => {
     try {
-        const BotAdmin = await isBotAdmin(message, message.client);
-        const admin = await isAdmin(message, message.client);
+        const BotAdmin = await isBotAdmin(message);
+        const admin = await isAdmin(message);
         if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
         if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
         if (!message.quoted.image) return await message.reply('*_reply to an image!_*');
@@ -244,8 +244,8 @@ inrl({
     onlyGroup: true
 }, async (message, match) => {
     try {
-        const BotAdmin = await isBotAdmin(message, message.client);
-        const admin = await isAdmin(message, message.client);
+        const BotAdmin = await isBotAdmin(message);
+        const admin = await isAdmin(message);
         if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
         if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
         if (!message.quoted.image) return await message.reply('*_reply to an image!_*');
@@ -264,8 +264,8 @@ inrl({
     onlyGroup: true
 }, async (message, match) => {
     try {
-        const BotAdmin = await isBotAdmin(message, message.client);
-        const admin = await isAdmin(message, message.client);
+        const BotAdmin = await isBotAdmin(message);
+        const admin = await isAdmin(message);
         if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
         if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
         if (message.client.text > 75) return await message.client.sendMessage(message.jid, {
@@ -292,8 +292,8 @@ inrl({
     onlyGroup: true
 }, async (message, match) => {
     try {
-        const BotAdmin = await isBotAdmin(message, message.client);
-        const admin = await isAdmin(message, message.client);
+        const BotAdmin = await isBotAdmin(message);
+        const admin = await isAdmin(message);
         if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
         if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
         if (message.client.text > 400) return await message.client.sendMessage(message.jid, {
@@ -318,8 +318,8 @@ inrl({
     type: 'group',
     onlyGroup: true
 }, async (message, match) => {
-    const BotAdmin = await isBotAdmin(message, client);
-    const admin = await isAdmin(message, client);
+    const BotAdmin = await isBotAdmin(message);
+    const admin = await isAdmin(message);
     if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
     if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
     try {
@@ -339,8 +339,8 @@ inrl({
     type: 'group',
     onlyGroup: true
 }, async (message, match) => {
-    const BotAdmin = await isBotAdmin(message, client);
-    const admin = await isAdmin(message, client);
+    const BotAdmin = await isBotAdmin(message);
+    const admin = await isAdmin(message);
     if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
     if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
     try {
@@ -360,8 +360,8 @@ inrl({
     type: 'group',
     onlyGroup: true
 }, async (message, match) => {
-    const BotAdmin = await isBotAdmin(message, client);
-    const admin = await isAdmin(message, client);
+    const BotAdmin = await isBotAdmin(message);
+    const admin = await isAdmin(message);
     if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
     if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
     try {
@@ -381,8 +381,8 @@ inrl({
     type: 'group',
     onlyGroup: true
 }, async (message, match) => {
-    const BotAdmin = await isBotAdmin(message, client);
-    const admin = await isAdmin(message, client);
+    const BotAdmin = await isBotAdmin(message);
+    const admin = await isAdmin(message);
     if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
     if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
     try {
@@ -416,8 +416,8 @@ inrl({
     onlyGroup: true
 }, async (message, match) => {
     try {
-        const BotAdmin = await isBotAdmin(message, message.client);
-        const admin = await isAdmin(message, message.client);
+        const BotAdmin = await isBotAdmin(message);
+        const admin = await isAdmin(message);
         if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
         if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
         const code = await message.client.groupInviteCode(message.jid);
@@ -437,8 +437,8 @@ inrl({
     onlyGroup: true
 }, async (message, match) => {
     try {
-        const BotAdmin = await isBotAdmin(message, message.client);
-        const admin = await isAdmin(message, message.client);
+        const BotAdmin = await isBotAdmin(message);
+        const admin = await isAdmin(message);
         if (!BotAdmin) return await message.reply('*_Bot must Be Admin_*');
         if (!admin && !message.client.isCreator) return await message.reply('*_request failed with statuscode 403*_');
         await message.client.groupRevokeInvite(message.jid);
