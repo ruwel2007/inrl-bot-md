@@ -76,7 +76,9 @@ inrl({
     type: 'info',
     usage:"*for normal text message*\n```.alive $text>hey_bro_&sender;\ntime:&time;```\n\n*for image*\n```.alive $iamge>img_url;$text>hey _sis_\ndate&date\speed : &speed;```\n\n*for video*\n```.alive $video>url;```\n\n*message with LinkPrvew*\n```.alive $sticker>url;\n$thumbnail>url;\n$title>text;\n$body>hy;\n$mediatype>1;\n$souceurl>url;\n$mediaurl>url;```"
 }, async (message, match, data) => {
-    if(match && message.client.isCreator){
+    if(match == "get" && message.client.isCreator){
+    return await message.send(data.ALIVE_DATA);
+    } else if(match && message.client.isCreator){
     return await  UpdateVariable("ALIVE_DATA", match.trim(),message.conn.user.id.split(':')[0]);
     }
     return await send_alive(message, data);
