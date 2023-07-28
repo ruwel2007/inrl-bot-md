@@ -17,7 +17,7 @@ inrl({
     fromMe :true,
     onlyGroup :true
 }, async (message, match, data) => {
-if(!message.quoted.sender || !match) return await message.send("*_eg:-_* *warn* ```reply to a user```\n*warn* ```reset```\n*warn* ```list```");
+if(!match) return await message.send("*_eg:-_*\n*warn* ```reply to a user```\n*warn* ```reset```\n*warn* ```list```");
 if(match && match == "get"){
 let lists = await ListWarn(message.from, message.client.user.number), msg ="*List of Users*\n\n";
 if(!lists[0]) return await message.send('*_Not Found_*');
