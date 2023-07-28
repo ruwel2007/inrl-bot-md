@@ -35,7 +35,7 @@ inrl({
     category: ["all,system"],
     type: "database",
     fromMe: true
-}, async (message, match) => {
+}, async (message, match, data) => {
     let {
         ALLWAYS_ONLINE,
         REACT,
