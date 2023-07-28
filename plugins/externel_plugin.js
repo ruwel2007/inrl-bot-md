@@ -1,11 +1,10 @@
-const {
+>const {
     inrl,
     runtime,
     add_plugin,
     dlt_plugin,
     getListOfPlugin,
-    getVar,
-    withValue
+    extractUrlsFromString
 } = require("../lib")
 const {
     exec
@@ -17,25 +16,24 @@ const fs = require("fs");
 inrl({
     pattern: '^restart',
     desc: 'to restart bot',
-    sucReact: "😛",
-    category: ["system", "all"],
+    react: "🥱",
     type: "system",
     fromMe: true
 }, async (message, match) => {
-    await message.reply('Restarting please await few second°s')
+    await message.reply('Restarting please await few secondÂ°s')
     exec('pm2 restart all')
 })
 inrl({
-    pattern: 'install',
-    desc: 'to install externel Plugin ',
-    sucReact: "😛",
-    category: ["system", "all"],
+    pattern: 'plugin',
+    desc: 'to get all externel Plugin ',
+    react: "🦥",
     type: "system",
     fromMe: true
 }, async (message, match) => {
-    match = message.reply_message.text|| match;
-    if (!match) return await message.send("_*need gist Url!*_");
-    const urll = extractUrlsFromString(match);
+    let text = "",
+        name, urls;
+        if(match && extractUrlsFromString(match)){
+        const urll = extractUrlsFromString(match);
     if(!urll[0]) return message.send('_Error, try again!_')
     let NewUrl = !match?.toString().includes('/raw') ? match.toString() + '/raw' : match.toString()
     await message.reply("wait a minut!")
@@ -57,22 +55,11 @@ inrl({
             return await message.reply(e);
         }
         await message.reply("newly installed plugin are " + plugin_name.split('test')[0])
-        await add_plugin(plugin_name.split('test')[0], url)
+        await add_plugin(plugin_name.split('test')[0], NewUrl, message.client.user.number)
         fs.unlinkSync(__dirname + "/" + plugin_name + ".js");
     }
-});
-inrl({
-    pattern: 'plugins',
-    desc: 'to get all externel Plugin ',
-    sucReact: "😛",
-    category: ["system", "all"],
-    type: "system",
-    fromMe: true
-}, async (message, match) => {
-    let text = "",
-        name, urls;
-    if (!match) {
-        let list = await getListOfPlugin(message.client.user.id.split('@')[0]);
+    } else  {
+        let list = await getListOfPlugin(message.client.user.number);
         if (list == 'no data') return await message.reply('*_externel plugins db is empty!_*')
         for (let i = 0; i < list.length; i++) {
             name = list[i].name;
@@ -90,21 +77,20 @@ inrl({
 inrl({
     pattern: 'remove',
     desc: 'to remove externel Plugin ',
-    sucReact: "🐽",
-    category: ["system", "all"],
+    react: "😶",
     type: "system",
     fromMe: true
 }, async (message, match) => {
     if (!match) return;
     match = match.trim();
-    let list = await getListOfPlugin(message.client.user.id.split('@')[0]),
+    let list = await getListOfPlugin(message.client.user.number),
         name = "",
         avb = false;
     if (list == 'no data') return message.reply('_externel plugins db is empty!_')
     for (let i = 0; i < list.length; i++) {
         name = list[i].name;
         if (name == match) {
-            await dlt_plugin(match)
+            await dlt_plugin(match,message.client.user.number)
             return await message.send("_plugin removed successfully!, type restart to remove plugin_");
         } else {
             avb = true;
