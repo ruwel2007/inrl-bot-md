@@ -14,7 +14,7 @@ inrl({
     react: "💯",
     type: "search"
 }, async (message, client, match) => {
-    if (match || message.quoted.sender)  return await message.reply('*_need user_*');
+    if (!match && !message.quoted.sender)  return await message.reply('*_need user_*');
         let sender;
         if (message.quoted.sender) sender = message.quoted.sender.split("@s.whatsapp.net")[0];
         let True = match.includes('@') ? match.split('@')[1] : match;
