@@ -79,8 +79,8 @@ inrl({
         return await m.send(res);
     }
     let limit = match.replace(/[^0-9]/gi, '');
-    if (!limit) return await m.send('*Failed*\n*eg:- limit 10');
-    if (limit > 20) return await m.reply('maximum limit upto 20\n after thet limit trybto restet');
+    if (!limit) return await m.send('*Failed*\n*eg:- limit 10*');
+    if (limit > 20) return await m.reply('*_maximum limit upto 20_*\n_after thet limit try to limit reset_');
     await giveLimit(user, limit, m.client.user.number);
     return m.send("successfull");
 });
