@@ -1,5 +1,11 @@
 # *Inrl Multi-Device whatsapp Bot*
 
+<p align="center">  
+  <a href="https://inrl-web.onrender.com/info/group">
+    <img alt=INRL-MD height="250" src="https://inrl-web.onrender.com/info/bot/status">
+</a> 
+</p>
+
 ## _Support this project: [Buy Me A Coffee](https://inrl-web.onrender.com/support/donate) 💖_
   
 
