@@ -2,7 +2,6 @@
 
 const {
     inrl,
-    getVar,
     isAdmin,
     isBotAdmin,
     setWarn,
@@ -22,7 +21,7 @@ if(match && match == "reset" && message.quoted.sender){
         const u = message.quoted.sender;
         const g = message.from;
         const t = match || "reset";
-        const d = await ResetWarn(u, g, t, message.client.user.id.split('@')[0])
+        const d = await ResetWarn(u, g, t, message.client.user.number)
         return await message.reply(`_successfull_`);
         }
         const BotAdmin = await isBotAdmin(message, message.client);
@@ -36,7 +35,7 @@ if(match && match == "reset" && message.quoted.sender){
         const u = message.quoted.sender;
         const g = message.from;
         const t = match || "warning";
-        const d = await setWarn(u, g, t,message.client.user.id.split('@')[0])
+        const d = await setWarn(u, g, t,message.client.user.number)
         let count = d.count,
             COUND = WARNCOUND;
         let remains = COUND - count;
@@ -54,7 +53,7 @@ if(match && match == "reset" && message.quoted.sender){
             const u = message.quoted.sender;
             const g = message.from;
             const t = match || "reset";
-            const d = await ResetWarn(u, g, t, message.client.user.id.split('@')[0])
+            const d = await ResetWarn(u, g, t, message.client.user.number)
             if(BotAdmin){
             await message.client.groupParticipantsUpdate(message.from, [message.quoted.sender], "remove");
             return await message.reply("_user removes from the group due to warn limit existence_")
