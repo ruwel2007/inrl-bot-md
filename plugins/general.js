@@ -35,7 +35,7 @@ inrl({
         },
         caption: "scan within 23.5 seconds"
     };
-    return await message.message.client.sendMessage(message.from, Message).catch((e) => message.reply('*_Failed_*'));
+    return await message.client.sendMessage(message.from, Message).catch((e) => message.reply('*_Failed_*'));
 });
 inrl({
     pattern: 'jid',
@@ -44,13 +44,13 @@ inrl({
     type: "general"
 }, async (message) => {
     if (message.quoted.sender) {
-        await message.message.client.sendMessage(message.from, {
+        await message.client.sendMessage(message.from, {
             text: message.quoted.sender
         }, {
             quoted: message
         })
     } else {
-        await message.message.client.sendMessage(message.from, {
+        await message.client.sendMessage(message.from, {
             text: message.from
         }, {
             quoted: message
@@ -91,7 +91,7 @@ inrl({
     fromMe :true
 }, async (message, match) => {
     if (!match) {
-        return message.message.client.sendMessage(message.from, {
+        return message.client.sendMessage(message.from, {
             text: "after the (cmd) enter the jid to share your data \n_example :- forward 910123456789@s.whatsapp.net_"
         });
     }
