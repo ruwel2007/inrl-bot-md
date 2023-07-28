@@ -1,8 +1,8 @@
 # *Inrl Multi-Device whatsapp Bot*
 
 <p align="center">  
-  <a href="https://inrl-web.onrender.com/info/group">
-    <img alt=INRL-MD height="250" src="https://inrl-web.onrender.com/info/bot/status">
+  <a href="https://inrl-web.onrender.com/info/wagroup">
+    <img alt=INRL-MD height="250" src="https://inrl-web.onrender.com/info/bot/status.jpeg">
 </a> 
 </p>
 
