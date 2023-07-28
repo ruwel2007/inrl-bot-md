@@ -7,6 +7,7 @@ const {
     isValidMailid,
     sendMail,
     clearUserFromMail,
+    getVerifiedUsers,
     verifyUser,
     giveLimit,
     resetLimit,
@@ -21,18 +22,24 @@ inrl({
     fromMe: 'public'
 }, async (m, match) => {
     const user = m.sender.split('@')[0];
-    if (!match) return await m.send("*incorrect format*\n```ex:-``` *permit email-ID*");
+    if (!match && !m.client.isCreator) return await m.send("*incorrect format*\n```ex:-``` *permit email-ID*");
     if (match == "remove") {
-        const va = await clearUserFromMail(user);
-        return await m.send(`${va?"user removed from mail-db": "this user not found in mail-db"}`);
+        if(m.client.isCreator  && !m.reply_message.sender) return await m.send('*_reply to a user_*');
+        const va = await clearUserFromMail(user, m.client.user.number);
+        return await m.send(`${va?"_user removed from mail-db_": "_this user not found in mail-db_"}`);
+    } else if (match == "get") {
+        if(!m.client.isCreator) return await m.send('*_request failed with statuscode 403*_');
+        const list = await getVerifiedUsers(m.client.user.number);
+        return await m.send(list);
     }
-    const ver = await IsMailed(user);
+    if(m.client.isCreator) return await m.send('*_As you have sudo accsess of this bot! there is no need to take permission_*');
+    const ver = await IsMailed(user, m.client.user.number);
     if (ver) return await m.send("_already mailed_\n```permit remove to remove your data```");
     let valid = await isValidMailid(match);
     if (!valid) return await m.send("_invalid mail_");
     const key = GenrateOtp();
-    const res = await sendMail(match, key, user);
-    return await m.reply("```successfull```\nuse *otp* key _to verify_");
+    const res = await sendMail(match, key, user, m.client.user.number);
+    return await m.reply("```successfull```\nuse *otp* key _to verify_\n*_eg:- otp Hx54Gf_*");
 });
 inrl({
     pattern: 'otp',
@@ -42,12 +49,12 @@ inrl({
     fromMe: 'public'
 }, async (m, match) => {
     const user = m.sender.split('@')[0];
-    const ver = await IsMailed(user);
+    const ver = await IsMailed(user, m.client.user.number);
     if (!ver) return await m.send("_not mailed yet!_");
     if (!match) return await m.send("_give me your code_");
     if (match.length != 6) return await m.send("_invalid key_\n key length nust be 6");
-    const vr = await verifyUser(match, user);
-    return await m.send(`${vr?"user verified": "filed"}`)
+    const vr = await verifyUser(match, user, m.client.user.number);
+    return await m.send(`${vr?"_*user verified*_": "*_Failed_*"}`)
 });
 inrl({
     pattern: 'limit',
@@ -56,24 +63,24 @@ inrl({
     onlyPm: true,
     fromMe: true
 }, async (m, match) => {
-    if (!m.quoted.sender) return await m.reply('```<reply> to an user```');
+    if (!m.quoted.sender) return await m.reply('*_reply to a user_*\n*_eg:- limit get_* _<reply to a user>_\n*_limit reset_* _to reset limit_\n*_limit kick_* _to remove user permanently_');
     const user = m.quoted.sender.split('@')[0];
-    const valid = await isVerified(user);
+    const valid = await isVerified(user, m.client.user.number);
     if (!valid) return await m.reply('```user must be verified befor giving limit```');
     if (!match) return m.reply('filed\nex:- *limit* ```reset``` _to reset_\n*limit* ```kick``` _to remove user_\n*limit* ```get``` _to get limit_\n*limit* 5 _to give limit_');
     if (match == "reset") {
-        await resetLimit(user);
+        await resetLimit(user, m.client.user.number);
         return await m.send('```requested to DB```')
     } else if (match == "kick") {
-        const res = await removeUserLimit(user);
-        return await m.send(`_${res?"user removed": "filed"}_`)
+        const res = await removeUserLimit(user, m.client.user.number);
+        return await m.send(`_${res?"user removed": "*Failed*"}_`)
     } else if (match == "get") {
-        const res = await getLimitV2(user);
+        const res = await getLimitV2(user, m.client.user.number);
         return await m.send(res);
     }
     let limit = match.replace(/[^0-9]/gi, '');
-    if (!limit) return await m.send('field\n*limit 10');
+    if (!limit) return await m.send('*Failed*\n*eg:- limit 10');
     if (limit > 20) return await m.reply('maximum limit upto 20\n after thet limit trybto restet');
-    await giveLimit(user, limit);
+    await giveLimit(user, limit, m.client.user.number);
     return m.send("successfull");
 });
