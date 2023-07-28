@@ -231,7 +231,7 @@ inrl({
     DismissPrefix: true,
 }, async (message, match, data) => {
     if (!match) {
-        match = m.from;
+        match = message.from;
         await message.send('_you not gived any jid so bot off from this jid_\n\n```block_chat get```\n```block_chat remove jid```');
     }
     if (match && match == "get") {
