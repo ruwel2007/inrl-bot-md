@@ -37,7 +37,7 @@ inrl({
     fromMe :true
 }, async (message, match) => {
     let data = await getCmd(message.client.user.number),
-        cmds = "*Totel Cmds*\n\n";
+        cmds = "*Total Cmds*\n\n";
     if (data == "no data") return message.send('_*no sticker cmd in your db!*_')
     let n = 1;
     data.map((b) => {
