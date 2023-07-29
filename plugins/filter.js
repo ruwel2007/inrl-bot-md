@@ -24,7 +24,7 @@ inrl({
             return await m.send(res);
         }
     } else if ((text.includes("del") || text.includes("dlt")) && !text.includes('=')) {
-        if (!text.replace("dlt","").replace("del","").trim()) return m.send('filled');
+        if (!text.replace("dlt","").replace("del","").trim()) return m.send('*Failed*');
         const res = removeFilter(m.from, text.replace("dlt","").replace("del","").trim(), m.client.user.number);
         if (!res) return await m.send("_request Failed_\n try to get list of filters\n*filter get*");
         return await m.send("successfull");
