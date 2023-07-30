@@ -1,4 +1,4 @@
->//created by @inrl
+//created by @inrl
 
 const {
     inrl,
