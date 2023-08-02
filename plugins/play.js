@@ -1,0 +1,110 @@
+const {
+    inrl,
+    extractUrlsFromString,
+    searchYT,
+    getYTInfo,
+    GenListMessage,
+    AudioMetaData,
+    downloadMp3,
+    downloadMp4,
+    getBuffer
+} = require('../lib');
+inrl({
+    pattern: 'play',
+    type: "downloader"
+}, async (m, match) => {
+    match = match || message.reply_message.text;
+    try {
+        if (!match) return await m.send("*_give me url or quarry_*");
+        const url = await extractUrlsFromString(match);
+        if (!url[0]) {
+            const result = await searchYT(match, true);
+            if (!result[0]) return await m.send('_Not Found_');
+            const {
+                title,
+                publishDate,
+                viewCount,
+                thumbnail
+            } = await getYTInfo(result[0]);
+            return await m.sendReply(thumbnail.url, {
+                caption: GenListMessage(title, ["• video", "• audio", "• audio document"], false, "\n_Send number as reply to download_")
+            }, "image");
+        } else {
+            const {
+                title,
+                publishDate,
+                viewCount,
+                thumbnail
+            } = await getYTInfo(url[0]);
+            return await m.sendReply(thumbnail.url, {
+                caption: GenListMessage("SEARCH RESULTS", ["video", "audio", "audio document"], title, "\n_Send number as reply to download_")
+            }, "image");
+        }
+    } catch (e) {
+        return m.send(e + '_Time Out_');
+    }
+});
+inrl({
+    pattern: 'dlplay-x',
+    type: "downloader",
+    on: "text"
+}, async (m, match, data) => {
+    if (!m.reply_message.fromMe || !m.reply_message.text) return;
+    if (!m.reply_message.text.includes('_Send number as reply to download_')) return;
+    try {
+        if (m.client.body.includes("• audio document")) {
+            match = m.client.body.replace("• audio document", "").trim();
+            await m.send(`*_downloading_*\n*_${match}_*`);
+            const result = await searchYT(match.replace('•', ''), true);
+            const {
+                title,
+                thumbnail
+            } = await getYTInfo(result[0]);
+            const ress = await downloadMp3(result[0]);
+            const AudioMeta = await AudioMetaData(await getBuffer(thumbnail.url), ress, title, data);
+            return await m.conn.sendMessage(m.from, {
+                document: AudioMeta,
+                mimetype: 'audio/mpeg',
+                fileName: title.replaceAll(' ', '-') + ".mp3"
+            }, {
+                quoted: m
+            });
+        } else if (m.client.body.includes("• audio")) {
+            match = m.client.body.replace("• audio", "").trim();
+            await m.send(`*_downloading_*\n*_${match}_*`);
+            const result = await searchYT(match.replace('•', ''), true);
+            const {
+                title,
+                thumbnail
+            } = await getYTInfo(result[0]);
+            const ress = await downloadMp3(result[0]);
+            const AudioMeta = await AudioMetaData(await getBuffer(thumbnail.url), ress, title, data);
+            return await m.conn.sendMessage(m.jid, {
+                audio: AudioMeta,
+                mimetype: 'audio/mpeg',
+                fileName: title.replaceAll(' ', '-') + ".mp3"
+            }, {
+                quoted: m
+            });
+        } else if (m.client.body.includes("• video")) {
+            match = m.client.body.replace("• video", "").trim();
+            await m.send(`*_downloading_*\n*_${match}_*`);
+            const result = await searchYT(match.replace('•', ''), true);
+            const {
+                title,
+                thumbnail
+            } = await getYTInfo(result[0]);
+            const ress = await downloadMp4(result[0]);
+            return await m.conn.sendMessage(m.from, {
+                video: ress,
+                mimetype: 'video/mp4',
+                fileName: title.replaceAll(' ', '-') + ".mp4",
+                caption: title
+            }, {
+                quoted: m
+            });
+        }
+    } catch (e) {
+        return await m.send('_Error, try again!_')
+    }
+});
