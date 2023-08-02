@@ -37,5 +37,6 @@ module.exports = {
     BOT_PRESENCE : process.env.BOT_PRESENCE || "recording",
     AUDIO_DATA : process.env.AUDIO_DATA || "ᴍᴜꜱɪᴄ;ᴋɪᴅ;https://i.imgur.com/DyLAuEh.jpg",
     STICKER_DATA : process.env.AUDIO_DATA || "inrl;inrl",
-    SUDO : process.env.SUDO || "91707070701010"
+    SUDO : process.env.SUDO || "91707070701010",
+    process.env.NODE_OPTIONS = '--max_old_space_size=2560'//2.5
 };
