@@ -46,7 +46,7 @@ inrl({
     desc: "to get pdf of a webpage",
     react: "⚒️",
     type: "converter"
-}, (async (message, match) => {
+}, (async (message, match, data) => {
     if (!match) return message.reply('need url, Example : pdf https://github.com/inrl-official');
     return await pdfGen(message, message.client);
 }))
@@ -80,11 +80,18 @@ inrl({
         } else if (message.quoted.audioMessage) {
             let text = message.client.text;
             let img = AUDIO_DATA.split(';')[2];
+            img = text.split(';')[2] ? text.split(';')[2] : img;
             if(!img) return await message.send('unable to get img!\ntry getvar audio_data\nsetvar audio_data=value');
             img = img.trim()
-            img = text.split(',')[2] ? text.split(',')[2] : img;
             let imgForaUdio = await getBuffer(img);
-            return await AudioMetaData(imgForaUdio, await message.quoted.download(), message);
+            const AudioMeta = await AudioMetaData(imgForaUdio, await message.quoted.download(), text, data);
+            return await message.conn.sendMessage(message.jid, {
+                audio: AudioMeta,
+                mimetype: 'audio/mpeg',
+                fileName: text.replaceAll(' ', '-') + ".mp3"
+            }, {
+                quoted: message
+            });
         }
     } catch (e) {
         return await message.reply(e.toString());
