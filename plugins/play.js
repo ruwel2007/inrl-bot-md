@@ -37,7 +37,7 @@ inrl({
                 thumbnail
             } = await getYTInfo(url[0]);
             return await m.sendReply(thumbnail.url, {
-                caption: GenListMessage("SEARCH RESULTS", ["• video", "• audio", "• audio document"], title, "\n_Send number as reply to download_")
+                caption: GenListMessage(title, ["• video", "• audio", "• audio document"], false, "\n_Send number as reply to download_")
             }, "image");
         }
     } catch (e) {
