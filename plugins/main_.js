@@ -61,7 +61,7 @@ inrl({
         STICKER_DATA
     } = data;
     try {
-        if (!message.quoted.sticker && message.quoted.audio) return message.reply('reply to a sticker/audio');
+        if (!message.quoted.sticker && !message.quoted.audio) return message.reply('reply to a sticker/audio');
         if (message.quoted.stickerMessage) {
             let pack, auth;
             if (match.includes(';')) {
