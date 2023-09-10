@@ -16,7 +16,7 @@ module.exports = {
     REJECT_CALL : toBool(process.env.REJECT_CALL || 'false'),
     BADWORD_BLOCK : toBool(process.env.BADWORD_BLOCK || 'true),
     ALLWAYS_ONLINE: toBool(process.env.ALLWAYS_ONLINE || "true"),
-    REACT : toBool(process.env.REACT || "false"),
+    REACT : toBool(process.env.REACT || "true"),
     ANTI_SPAM : toBool(process.env.ANTI_SPAM || "true"),
     SPAM_BLOCK : toBool(process.env.SPAM_BLOCK || "true"),
     AUTO_BIO : toBool(process.env.AUTO_BIO || "false"),
