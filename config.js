@@ -15,7 +15,7 @@ module.exports = {
     WA_GRP : process.env.WA_GRP || 'https://chat.whatsapp.com/ECjTvQMK5D6Bayzu6rJ7Ot',
     REJECT_CALL : toBool(process.env.REJECT_CALL || 'false'),
     BADWORD_BLOCK : toBool(process.env.BADWORD_BLOCK || 'true),
-    ALLWAYS_ONLINE: toBool(process.env.ALLWAYS_ONLINE || "true"),
+    ALLWAYS_ONLINE: toBool(process.env.ALLWAYS_ONLINE || "false"),
     REACT : toBool(process.env.REACT || "true"),
     ANTI_SPAM : toBool(process.env.ANTI_SPAM || "true"),
     SPAM_BLOCK : toBool(process.env.SPAM_BLOCK || "true"),
